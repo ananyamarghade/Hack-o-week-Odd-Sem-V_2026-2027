@@ -48,10 +48,8 @@ function getExpenses(req, res, query) {
   }
 
   result = [...result].sort((a, b) => new Date(b.date) - new Date(a.date));
-
   sendJSON(res, 200, result);
 }
-
 async function addExpense(req, res) {
   const data = await readBody(req);
   const error = validateExpense(data);
@@ -109,56 +107,110 @@ function getHomePage() {
 <title>Expense Tracker</title>
 <style>
   * { margin:0; padding:0; box-sizing:border-box; }
-  body { font-family: Arial, sans-serif; background:#f7f9fc; color:#2b2f38; padding:20px; }
-  h1 { text-align:center; margin-bottom:5px; }
-  .subtitle { text-align:center; color:#767c88; margin-bottom:20px; font-size:14px; }
-  .container { max-width:800px; margin:0 auto; }
 
-  .summary { display:flex; gap:15px; margin-bottom:20px; }
-  .summary-card { flex:1; background:#fff; border:1px solid #e7eaf0; border-radius:12px; padding:15px; text-align:center; }
-  .summary-card span { display:block; }
-  .summary-card .label { font-size:13px; color:#767c88; }
-  .summary-card .value { font-size:20px; font-weight:bold; color:#4a7fd6; margin-top:5px; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background:#f4f7fb;
+    color:#2b2f38;
+  }
 
-  .form-box { background:#fff; border:1px solid #e7eaf0; border-radius:12px; padding:20px; margin-bottom:20px; }
-  .form-box h2 { margin-bottom:15px; font-size:18px; }
-  .row { display:flex; gap:10px; margin-bottom:10px; flex-wrap:wrap; }
-  .row input, .row select { flex:1; min-width:140px; }
+  header {
+    background: #000080;
+    color: white;
+    padding:35px 20px 45px;
+    text-align:center;
+    border-radius: 0 0 24px 24px;
+    box-shadow: 0 4px 16px rgba(74,127,214,0.25);
+  }
+  header h1 { font-size:40px; }
+  header p { margin-top:6px; font-size:14px; opacity:0.9; }
+
+  .container { max-width:820px; margin:-25px auto 40px; padding:0 20px; }
+
+  .summary { display:flex; gap:16px; margin-bottom:24px; }
+  .summary-card {
+    flex:1; background:#fff; border-radius:14px; padding:18px;
+    text-align:center; box-shadow:0 6px 16px rgba(43,47,56,0.08);
+    transition: transform 0.2s ease;
+  }
+  .summary-card:hover { transform: translateY(-3px); }
+  .summary-card .label { font-size:15px; color:#767c88; }
+  .summary-card .value { font-size:21px; font-weight:700; color:#4a7fd6; margin-top:6px; }
+
+  .form-box {
+    background:#fff; border-radius:16px; padding:24px;
+    margin-bottom:24px; box-shadow:0 6px 16px rgba(43,47,56,0.06);
+  }
+  .form-box h2 { margin-bottom:16px; font-size:18px; }
+  .row { display:flex; gap:12px; margin-bottom:12px; flex-wrap:wrap; }
+  .row > div { flex:1; min-width:150px; }
+
+  label { display:block; font-size:12.5px; color:#767c88; margin-bottom:4px; }
+
   input, select, textarea {
-    padding:8px 10px; border:1px solid #e7eaf0; border-radius:8px; font-size:14px; width:100%;
+    padding:10px 12px; border:1px solid #e2e6ee; border-radius:10px;
+    font-size:14px; width:100%; font-family:inherit;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  input:focus, select:focus, textarea:focus {
+    outline:none; border-color:#4a7fd6; box-shadow:0 0 0 3px #eaf1fd;
   }
   textarea { resize:vertical; }
-  .error { color:#e2574c; font-size:12px; min-height:14px; display:block; }
 
+  .error { color:#e2574c; font-size:12px; min-height:14px; display:block; margin-top:3px; }
+
+  .form-buttons { margin-top:6px; }
   button {
-    padding:8px 18px; border:none; border-radius:20px; cursor:pointer; font-weight:bold; font-size:14px;
+    padding:10px 22px; border:none; border-radius:999px; cursor:pointer;
+    font-weight:600; font-size:14px; transition: all 0.2s ease;
   }
   .btn-add { background:#4a7fd6; color:#fff; }
+  .btn-add:hover { background:#3f6fc0; box-shadow:0 6px 14px rgba(74,127,214,0.3); transform: translateY(-1px); }
   .btn-clear { background:#eef1f6; color:#2b2f38; margin-left:10px; }
+  .btn-clear:hover { background:#e2e6ee; }
 
-  .filters { display:flex; gap:10px; margin-bottom:20px; }
+  .filters { display:flex; gap:12px; margin-bottom:22px; }
   .filters input { flex:2; }
   .filters select { flex:1; }
 
   .expense-card {
-    background:#fff; border:1px solid #e7eaf0; border-radius:12px; padding:15px; margin-bottom:12px;
+    background:#fff; border-radius:14px; padding:16px 18px; margin-bottom:12px;
+    box-shadow:0 4px 12px rgba(43,47,56,0.06);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
-  .expense-top { display:flex; justify-content:space-between; }
-  .expense-title { font-weight:bold; }
-  .expense-amount { color:#3fb98c; font-weight:bold; }
-  .expense-meta { font-size:12px; color:#767c88; margin:5px 0; }
-  .category-tag { background:#eaf1fd; color:#4a7fd6; padding:2px 8px; border-radius:10px; margin-right:8px; }
-  .expense-desc { font-size:13px; color:#767c88; margin-bottom:10px; }
-  .btn-edit { background:#e7f8f1; color:#3fb98c; margin-right:8px; padding:5px 12px; font-size:12px; }
-  .btn-delete { background:#fdecea; color:#e2574c; padding:5px 12px; font-size:12px; }
+  .expense-card:hover { transform: translateY(-2px); box-shadow:0 8px 18px rgba(43,47,56,0.1); }
 
-  .empty-state { text-align:center; color:#767c88; padding:40px 0; display:none; }
+  .expense-top { display:flex; justify-content:space-between; align-items:center; }
+  .expense-title { font-weight:600; font-size:15.5px; }
+  .expense-amount { color:#3fb98c; font-weight:700; font-size:16px; }
+
+  .expense-meta { font-size:12px; color:#767c88; margin:8px 0; display:flex; align-items:center; gap:8px; }
+  .category-tag { background:#eaf1fd; color:#4a7fd6; padding:3px 10px; border-radius:999px; font-weight:600; }
+
+  .expense-desc { font-size:13px; color:#767c88; margin-bottom:12px; }
+
+  .card-actions { display:flex; gap:8px; }
+  .btn-edit { background:#e7f8f1; color:#3fb98c; padding:6px 14px; font-size:12.5px; }
+  .btn-edit:hover { background:#d7f2e6; }
+  .btn-delete { background:#fdecea; color:#e2574c; padding:6px 14px; font-size:12.5px; }
+  .btn-delete:hover { background:#fadbd8; }
+
+  .empty-state { text-align:center; color:#767c88; padding:50px 20px; display:none; }
+  .empty-state .icon { font-size:40px; margin-bottom:10px; }
+  .empty-state p { font-size:16px; font-weight:600; color:#2b2f38; margin-bottom:4px; }
+
+  @media (max-width: 600px) {
+    .summary { flex-direction:column; }
+    .filters { flex-direction:column; }
+  }
 </style>
 </head>
 <body>
 
-<h1>Expense Tracker</h1>
-<p class="subtitle">Master Your Money, One Transaction at a Time</p>
+<header>
+  <h1>Expense Tracker</h1>
+  <p>Keep an eye on where your money goes</p>
+</header>
 
 <div class="container">
 
@@ -182,17 +234,20 @@ function getHomePage() {
     <form id="expenseForm">
       <input type="hidden" id="expenseId" />
       <div class="row">
-        <div style="flex:1">
-          <input type="text" id="title" placeholder="Title" />
+        <div>
+          <label for="title">Title</label>
+          <input type="text" id="title" placeholder="e.g. Lunch with friends" />
           <span class="error" id="titleError"></span>
         </div>
-        <div style="flex:1">
-          <input type="number" id="amount" placeholder="Amount" step="0.01" />
+        <div>
+          <label for="amount">Amount (₹)</label>
+          <input type="number" id="amount" placeholder="e.g. 250" step="0.01" />
           <span class="error" id="amountError"></span>
         </div>
       </div>
       <div class="row">
-        <div style="flex:1">
+        <div>
+          <label for="category">Category</label>
           <select id="category">
             <option value="">Select category</option>
             <option>Food</option>
@@ -205,16 +260,22 @@ function getHomePage() {
           </select>
           <span class="error" id="categoryError"></span>
         </div>
-        <div style="flex:1">
+        <div>
+          <label for="date">Date</label>
           <input type="date" id="date" />
           <span class="error" id="dateError"></span>
         </div>
       </div>
       <div class="row">
-        <textarea id="description" placeholder="Description (optional)" rows="2"></textarea>
+        <div>
+          <label for="description">Description (optional)</label>
+          <textarea id="description" placeholder="Add a short note..." rows="2"></textarea>
+        </div>
       </div>
-      <button type="submit" class="btn-add" id="submitBtn">Add Expense</button>
-      <button type="button" class="btn-clear" id="clearBtn">Clear</button>
+      <div class="form-buttons">
+        <button type="submit" class="btn-add" id="submitBtn">Add Expense</button>
+        <button type="button" class="btn-clear" id="clearBtn">Clear</button>
+      </div>
     </form>
   </div>
 
@@ -234,8 +295,9 @@ function getHomePage() {
 
   <div id="expenseList"></div>
   <div class="empty-state" id="emptyState">
+    <div class="icon"></div>
     <p>No expenses yet</p>
-    <span>Add your first expense above!</span>
+    <span>Add your first expense above to get started!</span>
   </div>
 
 </div>
@@ -246,7 +308,7 @@ function getHomePage() {
   const submitBtn = document.getElementById("submitBtn");
   const clearBtn = document.getElementById("clearBtn");
 
-  const expenseId = document.getElementById("expenseId");
+  const expenseIdField = document.getElementById("expenseId");
   const titleInput = document.getElementById("title");
   const amountInput = document.getElementById("amount");
   const categoryInput = document.getElementById("category");
@@ -292,11 +354,14 @@ function getHomePage() {
           <span class="expense-amount">₹\${exp.amount.toFixed(2)}</span>
         </div>
         <div class="expense-meta">
-          <span class="category-tag">\${exp.category}</span>\${dateStr}
+          <span class="category-tag">\${exp.category}</span>
+          <span>\${dateStr}</span>
         </div>
         \${exp.description ? '<div class="expense-desc">' + exp.description + '</div>' : ""}
-        <button class="btn-edit" onclick="editExpense('\${exp._id}')">Edit</button>
-        <button class="btn-delete" onclick="deleteExpense('\${exp._id}')">Delete</button>
+        <div class="card-actions">
+          <button class="btn-edit" onclick="editExpense('\${exp._id}')">Edit</button>
+          <button class="btn-delete" onclick="deleteExpense('\${exp._id}')">Delete</button>
+        </div>
       \`;
       expenseList.appendChild(div);
     });
@@ -332,6 +397,15 @@ function getHomePage() {
     if (!dateInput.value) {
       document.getElementById("dateError").textContent = "Date is required";
       ok = false;
+    } else {
+      const selectedDate = new Date(dateInput.value);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      if (selectedDate > today) {
+        document.getElementById("dateError").textContent = "Future date is not allowed";
+        alert("Incorrect date selected! You cannot pick a future date.");
+        ok = false;
+      }
     }
     return ok;
   }
@@ -348,11 +422,11 @@ function getHomePage() {
       description: descInput.value.trim(),
     };
 
-    const id = expenseId.value;
-    const url = id ? "/api/expenses/" + id : "/api/expenses";
+    const id = expenseIdField.value;
+    const endpoint = id ? "/api/expenses/" + id : "/api/expenses";
     const method = id ? "PUT" : "POST";
 
-    const res = await fetch(url, {
+    const res = await fetch(endpoint, {
       method,
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
@@ -371,7 +445,7 @@ function getHomePage() {
   function editExpense(id) {
     const exp = expenses.find((e) => e._id === id);
     if (!exp) return;
-    expenseId.value = exp._id;
+    expenseIdField.value = exp._id;
     titleInput.value = exp.title;
     amountInput.value = exp.amount;
     categoryInput.value = exp.category;
@@ -390,7 +464,7 @@ function getHomePage() {
 
   function resetForm() {
     form.reset();
-    expenseId.value = "";
+    expenseIdField.value = "";
     formTitle.textContent = "Add Expense";
     submitBtn.textContent = "Add Expense";
   }
@@ -406,31 +480,30 @@ function getHomePage() {
   `;
 }
 
-
 const server = http.createServer(async (req, res) => {
   const parsed = url.parse(req.url, true);
-  const path = parsed.pathname;
+  const reqPath = parsed.pathname;
   const query = parsed.query;
 
-  if (path === "/api/expenses" && req.method === "GET") {
+  if (reqPath === "/api/expenses" && req.method === "GET") {
     return getExpenses(req, res, query);
   }
 
-  if (path === "/api/expenses" && req.method === "POST") {
+  if (reqPath === "/api/expenses" && req.method === "POST") {
     return addExpense(req, res);
   }
 
-  if (path.startsWith("/api/expenses/") && req.method === "PUT") {
-    const id = path.split("/")[3];
+  if (reqPath.startsWith("/api/expenses/") && req.method === "PUT") {
+    const id = reqPath.split("/")[3];
     return updateExpense(req, res, id);
   }
 
-  if (path.startsWith("/api/expenses/") && req.method === "DELETE") {
-    const id = path.split("/")[3];
+  if (reqPath.startsWith("/api/expenses/") && req.method === "DELETE") {
+    const id = reqPath.split("/")[3];
     return deleteExpense(req, res, id);
   }
 
-  if (path === "/" && req.method === "GET") {
+  if (reqPath === "/" && req.method === "GET") {
     res.writeHead(200, { "Content-Type": "text/html" });
     return res.end(getHomePage());
   }
