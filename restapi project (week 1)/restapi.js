@@ -157,8 +157,8 @@ function getHomePage() {
 </head>
 <body>
 
-<h1>💰 Expense Tracker</h1>
-<p class="subtitle">Keep an eye on where your money goes</p>
+<h1>Expense Tracker</h1>
+<p class="subtitle">Master Your Money, One Transaction at a Time</p>
 
 <div class="container">
 
@@ -219,7 +219,7 @@ function getHomePage() {
   </div>
 
   <div class="filters">
-    <input type="text" id="searchInput" placeholder="🔍 Search by title..." />
+    <input type="text" id="searchInput" placeholder="Search by title..." />
     <select id="filterCategory">
       <option value="All">All Categories</option>
       <option>Food</option>
@@ -234,7 +234,7 @@ function getHomePage() {
 
   <div id="expenseList"></div>
   <div class="empty-state" id="emptyState">
-    <p>🧾 No expenses yet</p>
+    <p>No expenses yet</p>
     <span>Add your first expense above!</span>
   </div>
 
