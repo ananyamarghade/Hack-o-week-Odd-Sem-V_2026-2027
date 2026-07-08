@@ -3,8 +3,7 @@
 ## 📅 Week 1
 
 ### Tasks Implemented
-- Set up the project structure
-- Built a responsive user interface using HTML, CSS, and JavaScript
+- Built a user interface using HTML, CSS, and JavaScript
 - Implemented REST API using Node.js
 - Added CRUD operations (Create, Read, Update, Delete)
 - Added expense search and category filtering
