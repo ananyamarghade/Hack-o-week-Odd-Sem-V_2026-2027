@@ -11,5 +11,5 @@
 - Implemented automatic expense summary (Total Spending, Transactions, Highest Expense)
 - Added form validation and responsive design
 
-### 📌 Project Description
+### Project Description
 A simple Personal Expense Tracker that allows users to record, manage, search, filter, update, and delete daily expenses through a clean and responsive interface. The project demonstrates basic REST API development using Node.js with an interactive frontend.
