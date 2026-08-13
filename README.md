@@ -1,6 +1,6 @@
 # Hack-o-week-Sem-V
 
-## 📅 Week 1
+## 📅 Week 1 & Week 2
 
 ### Tasks Implemented
 - Built a user interface using HTML, CSS, and JavaScript
