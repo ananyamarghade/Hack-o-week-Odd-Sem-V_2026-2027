@@ -43,6 +43,24 @@ The analysis explores:
 - Data quality and missing values
 - Statistical patterns and relationships
 
+## Key Findings
+
+The Indian commodity price analysis revealed several useful patterns:
+
+- Commodity prices vary considerably across different locations and time periods.
+- Different commodities show different levels of price variability and volatility.
+- Location-wise analysis highlights noticeable differences in commodity prices.
+- Time-based analysis reveals changing price patterns across the dataset period.
+- Some commodities show considerably wider price distributions than others.
+- Statistical measures such as mean, median, standard deviation and percentiles help identify differences in commodity price behaviour.
+- Data cleaning was required to handle missing values, inconsistent data and datatype issues before analysis.
+- GroupBy and aggregation helped compare commodities and locations efficiently.
+- Visualizations made price trends, distributions and regional differences easier to identify.
+
+## Outcome
+
+The project demonstrates how real-world commodity data can be cleaned, transformed and analyzed to identify price patterns, regional differences and volatility using Python, NumPy and Pandas.
+
 ## Technologies Used
 
 - Python
