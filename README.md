@@ -1,8 +1,8 @@
 <div align="center">
 
-# 🚀 Hack-o-week — Semester V
+#  Hack-o-week — Semester V
 
-**A 12-week journey from a raw Node.js API to a manually-trained neural network, told through real-world projects.**
+**A journey from a raw Node.js API to a manually-trained neural network, told through real-world projects.**
 
 ![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black)
