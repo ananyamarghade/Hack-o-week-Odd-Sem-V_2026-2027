@@ -13,6 +13,8 @@
 ![Pandas](https://img.shields.io/badge/Pandas-150458?style=flat&logo=pandas&logoColor=white)
 ![NumPy](https://img.shields.io/badge/NumPy-013243?style=flat&logo=numpy&logoColor=white)
 ![Scikit-learn](https://img.shields.io/badge/Scikit--learn-F7931E?style=flat&logo=scikit-learn&logoColor=white)
+![XGBoost](https://img.shields.io/badge/XGBoost-189AB4?style=flat&logoColor=white)
+![LightGBM](https://img.shields.io/badge/LightGBM-2E8B57?style=flat&logoColor=white)
 ![Jupyter](https://img.shields.io/badge/Jupyter-F37626?style=flat&logo=jupyter&logoColor=white)
 
 </div>
@@ -21,9 +23,9 @@
 
 ## 📖 About
 
-This repository documents twelve weeks of practical implementation completed during the Semester V **Hack-o-week** program — six sprints, each pairing a technical skill set with a real-world dataset or product build. The work moves from a hand-rolled REST API, to a full-stack product, through classic data analysis and ML, and into computer vision and unsupervised learning.
+This repository documents fourteen weeks of practical implementation completed during the Semester V **Hack-o-week** program — eight sprints, each pairing a technical skill set with a real-world dataset or product build. The work moves from a hand-rolled REST API, to a full-stack product, through classic data analysis and ML, and into computer vision, unsupervised learning and ensemble methods.
 
-> **Progression:** REST APIs → Full-Stack Product → Data Analysis → Linear Algebra & Calculus → Regression & Classification → Model Evaluation → Dimensionality Reduction
+> **Progression:** REST APIs → Full-Stack Product → Data Analysis → Linear Algebra & Calculus → Regression & Classification → Model Evaluation → Dimensionality Reduction → Ensemble Methods & Regularization
 
 ## 📑 Table of Contents
 
@@ -36,6 +38,7 @@ This repository documents twelve weeks of practical implementation completed dur
 | 5 | [07 & 08](#-week-07--08--regression--classification) | Household Energy Consumption Prediction | Regression & classification |
 | 6 | [09 & 10](#-week-09--10--model-evaluation--feature-engineering) | Cardiovascular Disease Prediction | Feature engineering & evaluation |
 | 7 | [11 & 12](#-week-11--12--dimensionality-reduction) | Dimensionality Reduction on Bank Marketing Data | PCA & t-SNE |
+| 8 | [13 & 14](#-week-13--14--ensemble-methods--regularization) | Airline Passenger Satisfaction Classification | Bagging, Boosting, XGBoost, LightGBM, bias–variance, regularization |
 
 ---
 
@@ -342,6 +345,53 @@ The project demonstrates how dimensionality reduction techniques can be used to 
 
 ---
 
+## 🌲 Week 13 & 14 — Ensemble Methods & Regularization
+
+### Project: Airline Passenger Satisfaction Classification using Ensemble Methods
+
+A classification project on an airline passenger satisfaction dataset of 25,976 records, used to study ensemble learning (Bagging and Boosting, with a focus on XGBoost and LightGBM), the bias–variance trade-off, overfitting and underfitting, and L1/L2 regularization.
+
+**Tasks Implemented**
+- Loaded and inspected the dataset (`test.csv`), including data types, missing values, and summary statistics
+- Performed EDA: target-class distribution, numerical feature distributions, correlation heatmap, and categorical feature plots
+- Removed the index and `id` columns, encoded categorical variables, and filled missing values using the training-set median only (no data leakage)
+- Performed a stratified 60/20/20 train / validation / test split
+- Trained a Decision Tree baseline and compared it against Bagging (100 trees), AdaBoost, XGBoost, and LightGBM
+- Calculated accuracy, precision, recall, F1-score, and ROC-AUC, and generated confusion matrices and classification reports
+- Plotted XGBoost and LightGBM feature importances
+- Trained Decision Trees of depth 1 to 25 to study the bias–variance trade-off
+- Compared training and validation accuracy to identify underfitting and overfitting
+- Varied L1 (`reg_alpha`) and L2 (`reg_lambda`) regularization in XGBoost and compared validation performance
+- Built a final comparison of all models and regularization experiments on the test set
+
+**Real-World Problem**
+Airlines want to understand which passengers are satisfied and why. A single model can easily memorize its training data, so the project asks how combining models and penalizing complexity change the reliability of predictions on unseen passengers.
+
+**Analysis Performed**
+- Compared satisfaction across travel type, class, and customer type
+- Examined how service ratings (online boarding, wifi, seat comfort, entertainment) relate to satisfaction
+- Compared single-model and ensemble performance on the same test set
+- Studied how tree depth affects training and validation accuracy
+- Measured the train–validation gap for shallow, best-depth, and fully grown trees
+- Compared the effect of L1 and L2 penalties on accuracy, the train–validation gap, and leaf weights
+
+**Key Findings**
+- Bagging improved the fully grown Decision Tree's test accuracy from 0.9282 to 0.9542 by averaging many trees
+- LightGBM (accuracy 0.9629) and XGBoost (0.9600) scored highest in this run, but the difference is small and comes from a single split, so no algorithm is declared the best
+- AdaBoost (accuracy 0.9238) was slightly below the single tree in accuracy, though its ROC-AUC was higher (0.9741 vs 0.9285)
+- A depth-1 tree underfit (train 0.7833, validation 0.7790), validation accuracy peaked at depth 10 (0.9369), and a fully grown tree overfit (train 1.0000, validation 0.9311)
+- L1 and L2 regularization reduced XGBoost's train–validation gap (from 0.0402 to 0.0136 and 0.0121) but did not improve validation or test accuracy in this experiment
+
+**Real-World Outcome**
+The project shows how ensemble methods and regularization can be studied and compared using train / validation / test evidence, and why a model should be judged on validation performance and the train–validation gap rather than training accuracy alone.
+
+**Dataset:** Airline Passenger Satisfaction Dataset (25,976 records, 22 input features)
+**Tech Stack:** `Python` · `NumPy` · `Pandas` · `Matplotlib` · `Seaborn` · `Scikit-learn` · `XGBoost` · `LightGBM` · `Google Colab`
+
+📂 [`WEEK 13 & 14 (Ensemble Methods)/`](<WEEK 13 & 14 (Ensemble Methods)>)
+
+---
+
 ## 🛠️ Technologies Used
 
 | Week(s) | Technologies |
@@ -353,14 +403,15 @@ The project demonstrates how dimensionality reduction techniques can be used to 
 | 07 & 08 | Python, NumPy, Pandas, Matplotlib, Seaborn, Scikit-learn, Jupyter Notebook, Google Colab |
 | 09 & 10 | Python, NumPy, Pandas, Matplotlib, Seaborn, Scikit-learn, Jupyter Notebook, Google Colab |
 | 11 & 12 | Python, NumPy, Pandas, Matplotlib, Seaborn, Scikit-learn, Google Colab |
+| 13 & 14 | Python, NumPy, Pandas, Matplotlib, Seaborn, Scikit-learn, XGBoost, LightGBM, Google Colab |
 
 ## 🎯 Overall Learning Outcome
 
 The Hack-o-week progression focuses on applying concepts through practical implementation rather than studying them in isolation:
 
-**REST APIs → Full-Stack Product Development → Python & Data Analysis → Linear Algebra & Calculus (Computer Vision) → Regression & Classification → Model Evaluation & Feature Engineering → Dimensionality Reduction**
+**REST APIs → Full-Stack Product Development → Python & Data Analysis → Linear Algebra & Calculus (Computer Vision) → Regression & Classification → Model Evaluation & Feature Engineering → Dimensionality Reduction → Ensemble Methods & Regularization**
 
-The projects move from hand-building a backend API and a production-style full-stack product, to analysing real-world data, to using linear algebra and calculus to detect blood vessels in medical images and train a neural network from scratch, to developing and rigorously evaluating machine learning models, and finally to exploring high-dimensional data structure through PCA and t-SNE.
+The projects move from hand-building a backend API and a production-style full-stack product, to analysing real-world data, to using linear algebra and calculus to detect blood vessels in medical images and train a neural network from scratch, to developing and rigorously evaluating machine learning models, to exploring high-dimensional data structure through PCA and t-SNE, and finally to combining models with Bagging and Boosting while controlling overfitting through the bias–variance trade-off and L1/L2 regularization.
 
 ---
 
