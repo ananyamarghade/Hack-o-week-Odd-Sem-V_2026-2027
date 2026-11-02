@@ -2,7 +2,7 @@
 
 #  Hack-o-week — Semester V
 
-**A journey from a raw Node.js API to a manually-trained neural network, told through real-world projects.**
+**A journey from a raw Node.js API to transfer learning and Transformers, told through real-world projects.**
 
 ![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black)
@@ -15,6 +15,8 @@
 ![Scikit-learn](https://img.shields.io/badge/Scikit--learn-F7931E?style=flat&logo=scikit-learn&logoColor=white)
 ![XGBoost](https://img.shields.io/badge/XGBoost-189AB4?style=flat&logoColor=white)
 ![LightGBM](https://img.shields.io/badge/LightGBM-2E8B57?style=flat&logoColor=white)
+![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?style=flat&logo=pytorch&logoColor=white)
+![Hugging Face](https://img.shields.io/badge/Hugging%20Face-FFD21E?style=flat&logo=huggingface&logoColor=black)
 ![Jupyter](https://img.shields.io/badge/Jupyter-F37626?style=flat&logo=jupyter&logoColor=white)
 
 </div>
@@ -23,9 +25,9 @@
 
 ## 📖 About
 
-This repository documents fourteen weeks of practical implementation completed during the Semester V **Hack-o-week** program — eight sprints, each pairing a technical skill set with a real-world dataset or product build. The work moves from a hand-rolled REST API, to a full-stack product, through classic data analysis and ML, and into computer vision, unsupervised learning and ensemble methods.
+This repository documents eighteen weeks of practical implementation completed during the Semester V **Hack-o-week** program — ten sprints, each pairing a technical skill set with a real-world dataset or product build. The work moves from a hand-rolled REST API, to a full-stack product, through classic data analysis and ML, into computer vision, unsupervised learning and ensemble methods, and finally into neural networks and deep learning with PyTorch.
 
-> **Progression:** REST APIs → Full-Stack Product → Data Analysis → Linear Algebra & Calculus → Regression & Classification → Model Evaluation → Dimensionality Reduction → Ensemble Methods & Regularization
+> **Progression:** REST APIs → Full-Stack Product → Data Analysis → Linear Algebra & Calculus → Regression & Classification → Model Evaluation → Dimensionality Reduction → Ensemble Methods & Regularization → Neural Networks from Scratch → Deep Learning, Transfer Learning & Transformers
 
 ## 📑 Table of Contents
 
@@ -39,6 +41,8 @@ This repository documents fourteen weeks of practical implementation completed d
 | 6 | [09 & 10](#-week-09--10--model-evaluation--feature-engineering) | Cardiovascular Disease Prediction | Feature engineering & evaluation |
 | 7 | [11 & 12](#-week-11--12--dimensionality-reduction) | Dimensionality Reduction on Bank Marketing Data | PCA & t-SNE |
 | 8 | [13 & 14](#-week-13--14--ensemble-methods--regularization) | Airline Passenger Satisfaction Classification | Bagging, Boosting, XGBoost, LightGBM, bias–variance, regularization |
+| 9 | [15 & 16](#-week-15--16--neural-networks-from-scratch) | Neural Networks from Scratch | Perceptron, backpropagation, optimizers (NumPy only) |
+| 10 | [17 & 18](#-week-17--18--deep-learning-with-pytorch) | Deep Learning with PyTorch | MLP, CNN, regularization, transfer learning, Transformers, LLMs |
 
 ---
 
@@ -392,6 +396,97 @@ The project shows how ensemble methods and regularization can be studied and com
 
 ---
 
+## 🧮 Week 15 & 16 — Neural Networks from Scratch
+
+### Project: Building a Neural Network from First Principles (NumPy only)
+
+A notebook that builds every component of a neural network by hand — no deep learning framework — starting from saving classical ML models and ending with a reusable `NeuralNetwork` class trained on a nonlinear dataset.
+
+**Tasks Implemented**
+- Trained a Logistic Regression on Iris and saved it with `pickle` and `joblib`, verifying that reloaded models give identical predictions
+- Implemented a **Perceptron** (weights, bias, step function, learning rule) and taught it the AND gate
+- Implemented and plotted the **Sigmoid, ReLU, and Tanh** activation functions
+- Implemented **forward propagation** for a 2-layer network (tanh hidden layer, sigmoid output) on the `make_moons` dataset
+- Implemented **Binary Cross-Entropy** loss with numerical clipping
+- Derived and implemented **backpropagation** with the chain rule, and verified it with numerical **gradient checking**
+- Implemented **SGD** and **Adam** optimizers from scratch and compared their loss curves
+- Combined everything into a `NeuralNetwork` class (`fit`, `predict_proba`, `predict`, `evaluate`)
+- Plotted decision boundaries and generated a confusion matrix
+- Saved and restored trained weights as a `.npz` file
+
+**Real-World Problem**
+Frameworks hide what a neural network actually does. Rebuilding one piece by piece shows how a model turns inputs into predictions, how errors flow backwards to update weights, and why non-linear layers are needed for problems a straight line cannot solve.
+
+**Analysis Performed**
+- Compared pickle and joblib model persistence
+- Visualized the perceptron's learned decision boundary
+- Compared good, uncertain, and bad predictions under Binary Cross-Entropy
+- Compared analytical and numerical gradients for several parameters
+- Compared SGD and Adam training loss over 500 epochs
+- Evaluated the final network on training and test data
+
+**Key Findings**
+- Logistic Regression reached 96.67% test accuracy on Iris, and both pickle and joblib reloads reproduced its predictions exactly
+- The perceptron learned the AND gate correctly (weights `[0.2, 0.1]`, bias `-0.2`), but a single neuron can only separate linearly separable data
+- Analytical and numerical gradients agreed to about 1e-12, confirming the backpropagation code
+- In this run Adam reached a final training loss of 0.0707 versus 0.3414 for SGD, although the two used different learning rates (0.01 and 0.1), so this is not a controlled comparison
+- The NumPy network reached 98% training and 93% test accuracy on the moons dataset, with a test confusion matrix of `[[46, 4], [3, 47]]`
+- Saved and restored weights produced identical predictions and probabilities
+
+**Real-World Outcome**
+A working neural network built entirely from first principles, with every step (forward pass, loss, gradients, optimizer, persistence) understood and verified rather than treated as a black box.
+
+**Datasets:** Iris (`load_iris`) · Moons (`make_moons`, 400 samples, noise 0.2)
+**Tech Stack:** `Python` · `NumPy` · `Matplotlib` · `Scikit-learn` · `Joblib` · `Jupyter Notebook`
+
+📂 [`WEEK 15 & 16 (Neural Networks)/`](<WEEK 15 & 16 (Neural Networks)>)
+
+---
+
+## 🔥 Week 17 & 18 — Deep Learning with PyTorch
+
+### Project: Deep Learning, Transfer Learning, Transformers & LLMs
+
+A practical notebook that moves from NumPy to **PyTorch** — tensors and autograd, MLPs and CNNs on image data, regularization, transfer learning with a pretrained MobileNetV3, sentiment analysis with a Hugging Face Transformer, and an opt-in comparison of hosted and local LLMs.
+
+**Tasks Implemented**
+- Explored **tensors** (shapes, matrix multiplication, broadcasting) and **autograd**, verifying gradients against the analytical result
+- Fitted a linear regression with manual gradient descent and with `nn.Linear` + `SGD`
+- Built a **Multi-Layer Perceptron** on the digits dataset, with training/validation curves and a confusion matrix
+- Built a **Convolutional Neural Network** (`DigitCNN`), visualized its learned filters and misclassified images
+- Tested **Dropout**, **Batch Normalization**, and **Early Stopping** on a deliberately small training set (150 samples)
+- Applied **transfer learning**: frozen pretrained MobileNetV3 Small backbone with a new 10-class head
+- Ran **sentiment analysis** with DistilBERT using both the `pipeline` API and a manual tokenizer + model workflow
+- Built helper functions for four LLM routes (Anthropic API, OpenAI API, local Hugging Face model, Ollama) for text generation, summarization, and question answering, with all paid or heavy calls disabled by default
+
+**Real-World Problem**
+Modern image and language tasks rarely start from scratch. Understanding when a small custom network is enough, how to stop it overfitting, and how to reuse pretrained models and APIs responsibly is central to practical deep learning.
+
+**Analysis Performed**
+- Compared manual gradient descent with PyTorch's built-in modules
+- Compared an MLP and a CNN on the same stratified train / validation / test split (1078 / 359 / 360)
+- Compared five regularization setups using test accuracy, minimum validation loss, and the train–validation gap
+- Evaluated a transfer-learning head on upscaled, ImageNet-normalized digits
+- Inspected tokenization, logits, and softmax confidence for a sentiment model
+- Compared hosted APIs and local open models on quality, cost, privacy, and hardware needs
+
+**Key Findings**
+- Manual gradient descent and `nn.Linear` + `SGD` both recovered `w = 2.997`, `b = 2.006` for a true line of `y = 3x + 2`
+- The MLP (17,226 parameters) scored 96.11% test accuracy and the CNN (13,706 parameters) scored 95.00%; on tiny 8×8 images the convolutions did not beat the MLP
+- With only 150 training samples every model reached 100% training accuracy; BatchNorm gave the best test accuracy (0.900) and lowest validation loss (0.2958), while Early Stopping mainly kept validation loss from rising, though these are single-seed runs on a small dataset
+- The transfer-learning head (601,098 trainable out of 1,528,106 parameters) reached 88.89% test accuracy after 5 epochs, below the MLP, because digits differ greatly from ImageNet photos
+- DistilBERT classified clear positive and negative sentences with confidence above 0.99, but labelled the neutral sentence "The package arrived on Tuesday." as POSITIVE (0.98), since the model is binary and has no neutral class
+
+**Real-World Outcome**
+A hands-on view of the modern deep-learning workflow — building and regularizing networks in PyTorch, reusing pretrained models, and choosing between hosted and local LLMs — with API keys kept in environment variables and no paid calls made unless explicitly enabled.
+
+**Datasets:** scikit-learn Digits (1,797 images, 8×8) · SST-2 fine-tuned DistilBERT (`distilbert-base-uncased-finetuned-sst-2-english`) · ImageNet-pretrained MobileNetV3 Small
+**Tech Stack:** `Python` · `PyTorch` · `torchvision` · `Hugging Face Transformers` · `NumPy` · `Matplotlib` · `Scikit-learn` · `Jupyter Notebook`
+
+📂 [`WEEK 17 & 18 (Deep Learning)/`](<WEEK 17 & 18 (Deep Learning)>)
+
+---
+
 ## 🛠️ Technologies Used
 
 | Week(s) | Technologies |
@@ -404,14 +499,16 @@ The project shows how ensemble methods and regularization can be studied and com
 | 09 & 10 | Python, NumPy, Pandas, Matplotlib, Seaborn, Scikit-learn, Jupyter Notebook, Google Colab |
 | 11 & 12 | Python, NumPy, Pandas, Matplotlib, Seaborn, Scikit-learn, Google Colab |
 | 13 & 14 | Python, NumPy, Pandas, Matplotlib, Seaborn, Scikit-learn, XGBoost, LightGBM, Google Colab |
+| 15 & 16 | Python, NumPy, Matplotlib, Scikit-learn, Joblib, Jupyter Notebook |
+| 17 & 18 | Python, PyTorch, torchvision, Hugging Face Transformers, NumPy, Matplotlib, Scikit-learn, Jupyter Notebook |
 
 ## 🎯 Overall Learning Outcome
 
 The Hack-o-week progression focuses on applying concepts through practical implementation rather than studying them in isolation:
 
-**REST APIs → Full-Stack Product Development → Python & Data Analysis → Linear Algebra & Calculus (Computer Vision) → Regression & Classification → Model Evaluation & Feature Engineering → Dimensionality Reduction → Ensemble Methods & Regularization**
+**REST APIs → Full-Stack Product Development → Python & Data Analysis → Linear Algebra & Calculus (Computer Vision) → Regression & Classification → Model Evaluation & Feature Engineering → Dimensionality Reduction → Ensemble Methods & Regularization → Neural Networks from Scratch → Deep Learning, Transfer Learning & Transformers**
 
-The projects move from hand-building a backend API and a production-style full-stack product, to analysing real-world data, to using linear algebra and calculus to detect blood vessels in medical images and train a neural network from scratch, to developing and rigorously evaluating machine learning models, to exploring high-dimensional data structure through PCA and t-SNE, and finally to combining models with Bagging and Boosting while controlling overfitting through the bias–variance trade-off and L1/L2 regularization.
+The projects move from hand-building a backend API and a production-style full-stack product, to analysing real-world data, to using linear algebra and calculus to detect blood vessels in medical images, to developing and rigorously evaluating machine learning models, to exploring high-dimensional data structure through PCA and t-SNE, to combining models with Bagging and Boosting while controlling overfitting through the bias–variance trade-off and L1/L2 regularization, and finally to rebuilding a neural network from first principles in NumPy and then scaling up to PyTorch, CNNs, transfer learning, Transformers, and LLMs.
 
 ---
 
